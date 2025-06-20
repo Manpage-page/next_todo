@@ -21,6 +21,8 @@
 - 過去期限を延ばしがちだったタスクを優先的に強調するシステム
 などです
 
+![説明文](https://drive.google.com/file/d/1UCMkmROXPriRhzFUEyAZKf9qwMAmSf__/view?usp=drive_link)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
