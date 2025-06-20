@@ -6,7 +6,7 @@ final todoListProvider = StateNotifierProvider<TodoListNotifier, List<Todo>>(
 );
 
 class TodoListNotifier extends StateNotifier<List<Todo>> {
-  TodoListNotifier() : super([Todo('ドライブ'), Todo('でーと'), Todo('ゲームする')]);
+  TodoListNotifier() : super([Todo('ドライブ'), Todo('勉強'), Todo('ゲームする')]);
 
   void toggleDone(int index) {
     state = [
