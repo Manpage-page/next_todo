@@ -18,11 +18,18 @@ class TodoListNotifier extends StateNotifier<List<Todo>> {
     ];
   }
 
+  //リストを追加
   void addTodo(String title) {
     state = [...state, Todo(title)];
   }
 
+  //リストを削除
   void removeTodo(int index) {
     state = [...state]..removeAt(index);
+  }
+
+  //チェック入りをすべて削除
+  void removeCompleted() {
+    state = state.where((todo) => !todo.isDone).toList();
   }
 }
