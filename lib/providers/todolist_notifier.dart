@@ -1,12 +1,13 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/models/todo.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'todolist_notifier.g.dart';
 
-final todoListProvider = StateNotifierProvider<TodoListNotifier, List<Todo>>(
-  (ref) => TodoListNotifier(),
-);
-
-class TodoListNotifier extends StateNotifier<List<Todo>> {
-  TodoListNotifier() : super([Todo('ドライブ'), Todo('勉強'), Todo('ゲームする')]);
+@riverpod
+class TodoListNotifier extends _$TodoListNotifier {
+  @override
+  List<Todo> build() {
+    return [Todo('新しく追加')];
+  }
 
   void toggleDone(int index) {
     state = [

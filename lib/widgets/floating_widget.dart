@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:next_todo/constants/colors.dart';
-import 'package:next_todo/providers/todolist_provider.dart';
+import 'package:next_todo/providers/todolist_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FloatingWidget extends StatelessWidget {
@@ -19,7 +19,7 @@ class FloatingWidget extends StatelessWidget {
               FloatingActionButton(
                 heroTag: 'delete',
                 onPressed: () {
-                  ref.read(todoListProvider.notifier).removeCompleted();
+                  ref.read(todoListNotifierProvider.notifier).removeCompleted();
                   print('完了済みのtodoをまとめて削除');
                 },
                 backgroundColor: AppColors.grey,
@@ -30,6 +30,7 @@ class FloatingWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20),
+
               //undoボタン
               FloatingActionButton(
                 heroTag: 'undo',
@@ -65,7 +66,7 @@ class FloatingWidget extends StatelessWidget {
                             onPressed: () {
                               if (inputText.trim().isNotEmpty) {
                                 ref
-                                    .read(todoListProvider.notifier)
+                                    .read(todoListNotifierProvider.notifier)
                                     .addTodo(inputText.trim());
                               }
                               Navigator.pop(context);

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:next_todo/providers/todolist_provider.dart';
+import 'package:next_todo/providers/todolist_notifier.dart';
 import 'package:next_todo/constants/colors.dart';
 
 // Todoリストのタブ画面を定義するWidget（状態監視ができるConsumerWidget）
 class TodoListTab extends ConsumerWidget {
-  const TodoListTab({super.key});
+  final String tabTitle;
+  const TodoListTab({super.key, required this.tabTitle});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // プロバイダから現在のTodoリストを取得（状態監視）
-    final todos = ref.watch(todoListProvider); // todosを定義
+    // プロバイダから現在のstate(List)を取得（状態監視）
+    final todos = ref.watch(todoListNotifierProvider); // todosを定義
 
     // 状態を変更できるように、notifier（操作用オブジェクト）も取得
-    final notifier = ref.read(todoListProvider.notifier);
+    final notifier = ref.read(todoListNotifierProvider.notifier);
 
     // Todoリストを表示するリストビュー
     return ListView.builder(
