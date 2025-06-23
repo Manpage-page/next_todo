@@ -17,8 +17,20 @@ class TabbarWidget extends ConsumerWidget {
       isScrollable: true,
 
       tabs: [
-        ...tabs.map((tab) => Tab(text: tab)), //各タブを表示
+        ...tabs.map((tab) {
+          if (tab == '+') {
+            return const Tab(icon: Icon(Icons.add));
+          } else {
+            return Tab(text: tab);
+          }
+        }),
       ],
+      onTap: (index) {
+        if (tabs[index] == '+') {
+          // タブ追加処理
+          print('tab追加ボタンが押されました');
+        }
+      },
     );
   }
 }

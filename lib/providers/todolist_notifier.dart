@@ -1,5 +1,5 @@
 import 'package:next_todo/models/todo.dart';
-import 'package:next_todo/providers/tab_list_notifier.dart';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'todolist_notifier.g.dart';
 
