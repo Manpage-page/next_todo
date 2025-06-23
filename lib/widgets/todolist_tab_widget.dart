@@ -11,10 +11,12 @@ class TodoListTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // プロバイダから現在のstate(List)を取得（状態監視）
-    final todos = ref.watch(todoListNotifierProvider); // todosを定義
+    final todos = ref.watch(
+      todoListNotifierProvider(tabTitle),
+    ); // todosを定義(仮で'todo'を入れている)
 
     // 状態を変更できるように、notifier（操作用オブジェクト）も取得
-    final notifier = ref.read(todoListNotifierProvider.notifier);
+    final notifier = ref.read(todoListNotifierProvider(tabTitle).notifier);
 
     // Todoリストを表示するリストビュー
     return ListView.builder(

@@ -19,7 +19,9 @@ class FloatingWidget extends StatelessWidget {
               FloatingActionButton(
                 heroTag: 'delete',
                 onPressed: () {
-                  ref.read(todoListNotifierProvider.notifier).removeCompleted();
+                  ref
+                      .read(todoListNotifierProvider('todo').notifier)
+                      .removeCompleted();
                   print('完了済みのtodoをまとめて削除');
                 },
                 backgroundColor: AppColors.grey,
@@ -66,7 +68,9 @@ class FloatingWidget extends StatelessWidget {
                             onPressed: () {
                               if (inputText.trim().isNotEmpty) {
                                 ref
-                                    .read(todoListNotifierProvider.notifier)
+                                    .read(
+                                      todoListNotifierProvider('todo').notifier,
+                                    )
                                     .addTodo(inputText.trim());
                               }
                               Navigator.pop(context);

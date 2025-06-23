@@ -1,11 +1,13 @@
 import 'package:next_todo/models/todo.dart';
+import 'package:next_todo/providers/tab_list_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'todolist_notifier.g.dart';
 
 @riverpod
 class TodoListNotifier extends _$TodoListNotifier {
   @override
-  List<Todo> build() {
+  List<Todo> build(String tabTitle) {
+    ref.keepAlive();
     return [Todo('新しく追加')];
   }
 
