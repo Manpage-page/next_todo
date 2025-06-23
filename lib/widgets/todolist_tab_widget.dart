@@ -26,10 +26,10 @@ class TodoListTab extends ConsumerWidget {
         final todo = todos[index]; // 現在のTodoを取得
 
         return Container(
-          margin: const EdgeInsets.symmetric(vertical: 6), // 上下の余白
+          margin: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
             color: AppColors.grey,
-            borderRadius: BorderRadius.circular(16), // 角を丸く
+            borderRadius: BorderRadius.circular(16),
           ),
           child: ListTile(
             // Todoの状態に応じてアイコンを切り替え

@@ -11,7 +11,9 @@ class TabbarviewWidget extends ConsumerWidget {
     final tabs = ref.watch(tabListNotifierProvider);
 
     return TabBarView(
-      children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
+      children: [
+        for (final tab in tabs) TodoListTab(tabTitle: tab),
+      ], //本来はnormalTabs
     );
   }
 }

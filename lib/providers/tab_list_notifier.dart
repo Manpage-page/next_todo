@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:next_todo/providers/selected_index_notifier.dart';
 part 'tab_list_notifier.g.dart';
 
 @riverpod
@@ -14,6 +15,9 @@ class TabListNotifier extends _$TabListNotifier {
   void addTab(String tabName) {
     _baseTabs = [..._baseTabs, tabName];
     state = [..._baseTabs, '+'];
+    //新しいタブを追加したらインデックスも更新
+    final newIndex = _baseTabs.length - 1;
+    ref.read(selectedIndexNotifierProvider.notifier).update(newIndex);
   }
 
   //Tabを削除する
