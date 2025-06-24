@@ -10,10 +10,9 @@ class TabbarviewWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tabs = ref.watch(tabListNotifierProvider);
 
+    //それぞれのタブごとにTodoリストを生成・表示する
     return TabBarView(
-      children: [
-        for (final tab in tabs) TodoListTab(tabTitle: tab),
-      ], //本来はnormalTabs
+      children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
     );
   }
 }

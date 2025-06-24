@@ -2,9 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:next_todo/providers/selected_index_notifier.dart';
-//import 'package:next_todo/providers/selected_tabname_notifier.dart';
 import 'package:next_todo/providers/tab_list_notifier.dart';
-//import 'package:next_todo/providers/selected_tabname_notifier.dart';
 
 class TabbarWidget extends ConsumerWidget {
   const TabbarWidget({super.key});
@@ -14,9 +12,9 @@ class TabbarWidget extends ConsumerWidget {
     final tabs = ref.watch(tabListNotifierProvider);
 
     return TabBar(
-      indicatorColor: AppColors.emeraldgreen,
-      labelColor: AppColors.emeraldgreen,
-      unselectedLabelColor: Colors.white,
+      indicatorColor: AppColors.emeraldgreen, //選択されているタブの下線部
+      labelColor: AppColors.emeraldgreen, //選択中のタブの文字色
+      unselectedLabelColor: Colors.white, // 選択されていないタブの色
       isScrollable: true,
 
       tabs: [
@@ -28,11 +26,11 @@ class TabbarWidget extends ConsumerWidget {
           }
         }),
       ],
+
       onTap: (index) {
+        //+ボタンが押されたらタブを追加し、それ以外はselected_indexを更新する
         if (tabs[index] == '+') {
-          // タブ追加処理
           ref.read(tabListNotifierProvider.notifier).addTab('新しいタブ');
-          print('tab追加ボタンが押されました');
         } else {
           ref.read(selectedIndexNotifierProvider.notifier).update(index);
         }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:next_todo/constants/colors.dart';
 
+//Drawerの中身
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
 

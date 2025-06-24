@@ -10,9 +10,12 @@ class FloatingWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(selectedIndexNotifierProvider);
-    final tabList = ref.watch(tabListNotifierProvider);
-    final currentTabName = tabList[currentIndex];
+    //タブの名前を取得するためにインデックスとリストを取得している
+    final currentIndex = ref.watch(
+      selectedIndexNotifierProvider,
+    ); //現在選択されているタブのインデックス
+    final tabList = ref.watch(tabListNotifierProvider); //タブのリスト
+    final currentTabName = tabList[currentIndex]; //現在選択されているタブの値
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -21,25 +24,28 @@ class FloatingWidget extends ConsumerWidget {
         children: [
           //削除ボタン
           FloatingActionButton(
-            heroTag: 'delete',
+            heroTag: 'delete', //FABの識別用
+            //完了済みのリストをすべて削除
             onPressed: () {
               ref
                   .read(todoListNotifierProvider(currentTabName).notifier)
                   .removeCompleted();
-              print('完了済みのtodoをまとめて削除');
             },
+
             backgroundColor: AppColors.grey,
             shape: const CircleBorder(),
             child: Icon(Icons.delete_outline, color: AppColors.emeraldgreen),
           ),
           SizedBox(width: 20),
-
           //undoボタン
           FloatingActionButton(
             heroTag: 'undo',
+
+            //未実装
             onPressed: () {
               print('undoボタン');
             },
+
             backgroundColor: AppColors.grey,
             shape: const CircleBorder(),
             child: Icon(Icons.undo, color: AppColors.emeraldgreen),
@@ -48,6 +54,8 @@ class FloatingWidget extends ConsumerWidget {
           //追加ボタン
           FloatingActionButton(
             heroTag: 'add',
+
+            //リストを追加する
             onPressed: () {
               showDialog(
                 context: context,
@@ -86,6 +94,7 @@ class FloatingWidget extends ConsumerWidget {
               );
               print('追加ボタン');
             },
+
             backgroundColor: AppColors.emeraldgreen,
             shape: const CircleBorder(),
             child: Icon(Icons.add, color: Colors.black),

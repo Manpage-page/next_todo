@@ -17,12 +17,12 @@ class HomeScreen extends ConsumerWidget {
     return DefaultTabController(
       length: tabs.length, // タブの数(一応プログラムが動くようにtabsにしているが本来はnormalTabs)
       child: Scaffold(
-        backgroundColor: Colors.black, //背景色
-        appBar: const AppbarWidget(), //AppBar
-        drawer: DrawerWidget(), //drawer
+        backgroundColor: Colors.black,
+        appBar: const AppbarWidget(),
+        drawer: DrawerWidget(),
         body: Column(
           children: [TabbarWidget(), Expanded(child: TabbarviewWidget())],
-        ), //タブ
+        ),
 
         floatingActionButton: FloatingWidget(),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

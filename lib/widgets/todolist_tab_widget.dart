@@ -47,6 +47,8 @@ class TodoListTab extends ConsumerWidget {
                     todo.isDone
                         ? TextDecoration.lineThrough
                         : TextDecoration.none,
+                decorationColor: Colors.white,
+                decorationThickness: 2.0,
               ),
             ),
             // タップすると完了状態をトグル（切り替え）
