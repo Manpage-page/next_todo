@@ -37,4 +37,13 @@ class TodoListNotifier extends _$TodoListNotifier {
   void removeCompleted() {
     state = state.where((todo) => !todo.isDone).toList();
   }
+
+  //リスト並べ替えのメソッド
+  void reorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) newIndex -= 1; //入れ替え先のインデックスは1前にずれる
+    final updated = [...state];
+    final item = updated.removeAt(oldIndex);
+    updated.insert(newIndex, item);
+    state = updated;
+  }
 }
