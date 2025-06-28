@@ -24,6 +24,14 @@ class TodoListTab extends ConsumerWidget {
       itemCount: todos.length, // 表示するTodoの数
       onReorder: notifier.reorder, //並べ替え操作のnotifier
       buildDefaultDragHandles: false, //デフォルトのドラッグハンドルは使用しない
+      //ドラッグ中のUI設定
+      proxyDecorator: (child, index, animation) {
+        return Material(
+          color: Colors.transparent, //ドラッグ中に光らない設定
+          elevation: 0,
+          child: child,
+        );
+      },
 
       itemBuilder: (context, index) {
         final todo = todos[index]; // 現在のTodoを取得
@@ -39,6 +47,7 @@ class TodoListTab extends ConsumerWidget {
               borderRadius: BorderRadius.circular(16), //リストの角を丸める
             ),
 
+            //ここまで
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -70,6 +79,8 @@ class TodoListTab extends ConsumerWidget {
               onTap: () => notifier.toggleDone(index),
             ),
           ),
+
+          /**/
         );
       },
     );

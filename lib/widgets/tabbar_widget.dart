@@ -30,7 +30,38 @@ class TabbarWidget extends ConsumerWidget {
       onTap: (index) {
         //+ボタンが押されたらタブを追加し、それ以外はselected_indexを更新する
         if (tabs[index] == '+') {
-          ref.read(tabListNotifierProvider.notifier).addTab('新しいタブ');
+          //タブ追加時のダイアログ
+          showDialog(
+            context: context,
+            builder: (context) {
+              String tabName = '';
+              return AlertDialog(
+                title: const Text('タブを追加'),
+                content: TextField(
+                  autofocus: true,
+                  onChanged: (value) => tabName = value,
+                  decoration: const InputDecoration(hintText: '新しいタブ名を入力'),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('キャンセル'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (tabName.trim().isNotEmpty) {
+                        ref
+                            .read(tabListNotifierProvider.notifier)
+                            .addTab(tabName.trim());
+                      }
+                      Navigator.pop(context);
+                    },
+                    child: const Text('追加'),
+                  ),
+                ],
+              );
+            },
+          );
         } else {
           ref.read(selectedIndexNotifierProvider.notifier).update(index);
         }
