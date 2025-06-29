@@ -4,6 +4,7 @@ import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
+import 'package:next_todo/infrastructure/shared_preferences/save_todos.dart';
 
 class AddFAB extends ConsumerWidget {
   const AddFAB({super.key});
@@ -34,13 +35,17 @@ class AddFAB extends ConsumerWidget {
                   child: Text('キャンセル'),
                 ),
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (inputText.trim().isNotEmpty) {
-                      ref
-                          .read(
-                            todoListNotifierProvider(currentTabName).notifier,
-                          )
-                          .addTodo(inputText.trim());
+                      final notifier = ref.read(
+                        todoListNotifierProvider(currentTabName).notifier,
+                      );
+                      notifier.addTodo(inputText.trim());
+                      final todos = ref.read(
+                        todoListNotifierProvider(currentTabName),
+                      );
+
+                      await saveTodos(todos); //セーブする
                     }
                     Navigator.pop(context);
                   },

@@ -1,5 +1,4 @@
 import 'package:next_todo/domain/models/todo.dart';
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'todolist_notifier.g.dart';
 
@@ -8,6 +7,7 @@ class TodoListNotifier extends _$TodoListNotifier {
   @override
   List<Todo> build(String tabTitle) {
     ref.keepAlive(); //画面遷移後でもプロバイダを破棄しない
+
     return [Todo(title: '新しく追加')];
   }
 
