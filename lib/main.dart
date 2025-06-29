@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:next_todo/screen/home_screen.dart';
+import 'package:next_todo/presentation/screen/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {

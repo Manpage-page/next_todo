@@ -1,5 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:next_todo/providers/selected_index_notifier.dart';
+import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 part 'tab_list_notifier.g.dart';
 
 @riverpod

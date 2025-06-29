@@ -6,7 +6,7 @@ part of 'todolist_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$todoListNotifierHash() => r'6614ba9d9b0297fd9ad81aed3af61cf96bea0b4c';
+String _$todoListNotifierHash() => r'20b3b9c7e8a85f785b843432fd42bf105d0c3df3';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:next_todo/constants/colors.dart';
+import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:next_todo/providers/selected_index_notifier.dart';
-import 'package:next_todo/providers/tab_list_notifier.dart';
+import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
+import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 
+//画面上部のタブバーを管理するwidget
 class TabbarWidget extends ConsumerWidget {
   const TabbarWidget({super.key});
 

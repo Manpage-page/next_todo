@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:next_todo/providers/todolist_notifier.dart';
-import 'package:next_todo/constants/colors.dart';
+import 'package:next_todo/application/state/providers/todolist_notifier.dart';
+import 'package:next_todo/presentation/constants/colors.dart';
 
-// Todoリストのタブ画面を定義するWidget（状態監視ができるConsumerWidget）
+// Todoリストのタブ画面を定義するWidget
 class TodoListTab extends ConsumerWidget {
   final String tabTitle;
   const TodoListTab({super.key, required this.tabTitle});
@@ -47,15 +47,18 @@ class TodoListTab extends ConsumerWidget {
               borderRadius: BorderRadius.circular(16), //リストの角を丸める
             ),
 
-            //ここまで
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
+
               // Todoの状態に応じてアイコンを切り替え
               leading: Icon(
+                //動作を表すのでこのコードは要リファクタリング
                 todo.isDone ? Icons.check_circle : Icons.circle_outlined,
                 color: todo.isDone ? AppColors.emeraldgreen : Colors.white,
+
+                //ここまで
               ),
 
               // Todoのタイトルテキスト
@@ -79,8 +82,6 @@ class TodoListTab extends ConsumerWidget {
               onTap: () => notifier.toggleDone(index),
             ),
           ),
-
-          /**/
         );
       },
     );

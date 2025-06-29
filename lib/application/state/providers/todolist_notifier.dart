@@ -1,4 +1,4 @@
-import 'package:next_todo/models/todo.dart';
+import 'package:next_todo/domain/models/todo.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'todolist_notifier.g.dart';
@@ -8,7 +8,7 @@ class TodoListNotifier extends _$TodoListNotifier {
   @override
   List<Todo> build(String tabTitle) {
     ref.keepAlive(); //画面遷移後でもプロバイダを破棄しない
-    return [Todo('新しく追加')];
+    return [Todo(title: '新しく追加')];
   }
 
   //チェックを入れる
@@ -17,7 +17,7 @@ class TodoListNotifier extends _$TodoListNotifier {
       for (int i = 0; i < state.length; i++)
         //選択されたリストのインデックスのisDoneを反転
         if (i == index)
-          Todo(state[i].title, isDone: !state[i].isDone)
+          state[i].copyWith(isDone: !state[i].isDone)
         else
           state[i],
     ];
@@ -25,7 +25,7 @@ class TodoListNotifier extends _$TodoListNotifier {
 
   //リストを追加
   void addTodo(String title) {
-    state = [...state, Todo(title)];
+    state = [...state, Todo(title: title)];
   }
 
   //リストを削除
