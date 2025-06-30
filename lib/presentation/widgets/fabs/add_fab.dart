@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
+import 'package:next_todo/domain/features/todo_repository.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
-import 'package:next_todo/infrastructure/shared_preferences/save_todos.dart';
+import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
 
 class AddFAB extends ConsumerWidget {
   const AddFAB({super.key});
@@ -14,6 +15,11 @@ class AddFAB extends ConsumerWidget {
     final currentIndex = ref.watch(selectedIndexNotifierProvider);
     final tabList = ref.watch(tabListNotifierProvider);
     final currentTabName = tabList[currentIndex];
+    final todoRepositoryImplProvider = Provider<TodoRepository>(
+      (ref) => TodoRepositoryImpl(),
+    );
+    final repository = ref.read(todoRepositoryImplProvider);
+    //final todos = await repository.loadTodos();
 
     return FloatingActionButton(
       heroTag: 'add',
@@ -45,7 +51,7 @@ class AddFAB extends ConsumerWidget {
                         todoListNotifierProvider(currentTabName),
                       );
 
-                      await saveTodos(todos); //セーブする
+                      await repository.saveTodos(todos); //セーブする
                     }
                     Navigator.pop(context);
                   },
