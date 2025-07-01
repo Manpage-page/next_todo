@@ -1,30 +1,47 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
+import 'package:next_todo/application/state/providers/todo_repository_provider.dart';
 part 'tab_list_notifier.g.dart';
 
+/// タブ一覧を永続化付きで管理する AsyncNotifier 版
 @riverpod
 class TabListNotifier extends _$TabListNotifier {
-  //_basetabsを定義し、どのような処理でも+ボタンの最右配置を可能にした
-  List<String> _baseTabs = ['Todo', '使い方'];
-
+  // ────────────────────────────────────────────
+  // build : 起動時に SharedPreferences からタブをロード
+  // 戻り値を FutureOr にすることで AsyncNotifier として動作
+  // ────────────────────────────────────────────
   @override
-  List<String> build() {
-    return [..._baseTabs, '+'];
+  FutureOr<List<String>> build() async {
+    final repo = ref.read(todoRepositoryProvider);
+    final loaded = await repo.loadTabs();
+    return loaded; // これが初期タブリスト
   }
 
-  //Tabを追加するメソッド
-  void addTab(String tabName) {
-    _baseTabs = [..._baseTabs, tabName];
-    state = [..._baseTabs, '+'];
+  // ────────────────────────────────────────────
+  // addTab : タブを追加して保存
+  // ────────────────────────────────────────────
+  Future<void> addTab(String tab) async {
+    // 現在のタブ一覧を取得（Data のときだけ value がある）
+    final current = state.asData?.value ?? [];
+    final newList = [...current, tab];
 
-    //新しいタブを追加したらインデックスも更新
-    final newIndex = _baseTabs.length - 1;
-    ref.read(selectedIndexNotifierProvider.notifier).update(newIndex);
+    // 一旦ローディング状態にしてから保存
+    state = const AsyncLoading();
+    await ref.read(todoRepositoryProvider).saveTabs(newList);
+
+    // 保存完了後に Data で更新
+    state = AsyncData(newList);
   }
 
-  //選択されたTabを削除する
-  void removeTab(String tabName) {
-    state = state.where((tab) => tab != tabName).toList();
+  // ────────────────────────────────────────────
+  // removeTab : タブを削除して保存
+  // ────────────────────────────────────────────
+  Future<void> removeTab(String tab) async {
+    final current = state.asData?.value ?? [];
+    final newList = current.where((t) => t != tab).toList();
+
+    state = const AsyncLoading();
+    await ref.read(todoRepositoryProvider).saveTabs(newList);
+    state = AsyncData(newList);
   }
 }

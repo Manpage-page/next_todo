@@ -9,11 +9,21 @@ class TabbarviewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabs = ref.watch(tabListNotifierProvider);
+    final asynctabs = ref.watch(tabListNotifierProvider);
 
     //それぞれのタブごとにTodoリストを生成・表示する
-    return TabBarView(
-      children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
+    return asynctabs.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, _) => Center(child: Text('エラー: $err')),
+      data: (tabs) {
+        return TabBarView(
+          children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
+        );
+      },
     );
+
+    /*TabBarView(
+      children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
+    );*/
   }
 }

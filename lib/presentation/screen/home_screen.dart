@@ -12,10 +12,43 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabs = ref.watch(tabListNotifierProvider);
+    final asyncTabs = ref.watch(tabListNotifierProvider);
 
-    return DefaultTabController(
-      length: tabs.length, // タブの数(一応プログラムが動くようにtabsにしているが本来はnormalTabs)
+    return asyncTabs.when(
+      loading:
+          () => const Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(child: CircularProgressIndicator()),
+          ),
+
+      error:
+          (err, _) => Scaffold(
+            backgroundColor: Colors.black,
+            body: Center(child: Text('エラー: $err')),
+          ),
+
+      data: (tabs) {
+        return DefaultTabController(
+          length: tabs.length, // ← ここは List<String> なので OK
+          child: Scaffold(
+            backgroundColor: Colors.black,
+            appBar: const AppbarWidget(),
+            drawer: DrawerWidget(),
+            body: Column(
+              children: [
+                const TabbarWidget(),
+                Expanded(child: const TabbarviewWidget()),
+              ],
+            ),
+            floatingActionButton: const FloatingWidget(),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          ),
+        );
+      },
+    );
+
+    /*DefaultTabController(
+      length: asynctabs.length, // タブの数(一応プログラムが動くようにtabsにしているが本来はnormalTabs)
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: const AppbarWidget(),
@@ -27,6 +60,6 @@ class HomeScreen extends ConsumerWidget {
         floatingActionButton: FloatingWidget(),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
-    );
+    );*/
   }
 }

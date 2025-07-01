@@ -7,7 +7,7 @@ part of 'selected_index_notifier.dart';
 // **************************************************************************
 
 String _$selectedIndexNotifierHash() =>
-    r'ac12d9450557d43afb1f86d8b9a6111e2255f370';
+    r'f8cd0eaad715fc45e8b1527c98405dc333d546ff';
 
 /// See also [SelectedIndexNotifier].
 @ProviderFor(SelectedIndexNotifier)

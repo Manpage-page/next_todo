@@ -4,27 +4,42 @@ import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/presentation/widgets/ischeck_icon_widget.dart';
 
-// Todoリストのタブ画面を定義するWidget
-class TodoListTab extends ConsumerWidget {
+//initstateを使うためConsumerstatefulを使用
+class TodoListTab extends ConsumerStatefulWidget {
   final String tabTitle;
   const TodoListTab({super.key, required this.tabTitle});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // プロバイダから現在のstate(List)を取得（状態監視）
-    final todos = ref.watch(
-      todoListNotifierProvider(tabTitle),
-    ); // todosを定義(仮で'todo'を入れている)
+  ConsumerState<TodoListTab> createState() => _TodoListTabState();
+}
 
-    // 状態を変更できるように、notifier（操作用オブジェクト）も取得
-    final notifier = ref.read(todoListNotifierProvider(tabTitle).notifier);
+class _TodoListTabState extends ConsumerState<TodoListTab> {
+  @override
+  void initState() {
+    super.initState();
+    // 次フレームでロード呼び出し（buildより前に完了しなくてOK）
+    Future.microtask(() {
+      ref.read(todoListNotifierProvider(widget.tabTitle));
+      // ← ここがキモ
+    });
+  }
 
-    // Todoリストを表示するリストビュー
+  @override
+  Widget build(BuildContext context) {
+    //プロバイダから現在のstate(List)を取得
+    final todos = ref.watch(todoListNotifierProvider(widget.tabTitle));
+    //状態を変更できるようにnotifierを持ってきた
+    final notifier = ref.read(
+      todoListNotifierProvider(widget.tabTitle).notifier,
+    );
+
+    //Todoリストを表示するリストビュー
     return ReorderableListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: todos.length, // 表示するTodoの数
-      onReorder: notifier.reorder, //並べ替え操作のnotifier
-      buildDefaultDragHandles: false, //デフォルトのドラッグハンドルは使用しない
+      itemCount: todos.length,
+      onReorder: notifier.reorder,
+      buildDefaultDragHandles: false,
+
       //ドラッグ中のUI設定
       proxyDecorator: (child, index, animation) {
         return Material(
@@ -35,7 +50,7 @@ class TodoListTab extends ConsumerWidget {
       },
 
       itemBuilder: (context, index) {
-        final todo = todos[index]; // 現在のTodoを取得
+        final todo = todos[index];
 
         return ReorderableDragStartListener(
           key: ValueKey(todo),

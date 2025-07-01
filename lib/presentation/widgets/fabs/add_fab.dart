@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
-import 'package:next_todo/domain/features/todo_repository.dart';
+import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
 
@@ -12,9 +12,21 @@ class AddFAB extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 1. 選択中インデックス
     final currentIndex = ref.watch(selectedIndexNotifierProvider);
-    final tabList = ref.watch(tabListNotifierProvider);
-    final currentTabName = tabList[currentIndex];
+    // 2. タブ一覧（AsyncValue）を取得
+    final asyncTabs = ref.watch(tabListNotifierProvider);
+    // 3. ローディング or エラー時のフォールバック
+    if (asyncTabs.isLoading) {
+      return const SizedBox.shrink(); // 読み込み中はFAB出さない（お好みで）
+    }
+    if (asyncTabs.hasError) {
+      return const SizedBox.shrink(); // エラー時も非表示（お好みで）
+    }
+
+    final tabs = asyncTabs.value ?? ['+'];
+    final currentTabName = tabs[currentIndex];
+
     final todoRepositoryImplProvider = Provider<TodoRepository>(
       (ref) => TodoRepositoryImpl(),
     );
@@ -51,7 +63,7 @@ class AddFAB extends ConsumerWidget {
                         todoListNotifierProvider(currentTabName),
                       );
 
-                      await repository.saveTodos(todos); //セーブする
+                      await repository.saveTodos(currentTabName, todos); //セーブする
                     }
                     Navigator.pop(context);
                   },
