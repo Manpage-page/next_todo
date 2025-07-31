@@ -5,8 +5,8 @@ import 'package:next_todo/presentation/widgets/todolist_tab_widget.dart';
 
 //生成されたタブの数と同数のtabbarviewを生成するwidget
 class TabbarviewWidget extends ConsumerWidget {
-  const TabbarviewWidget({super.key});
-
+  const TabbarviewWidget({super.key, required this.tabs});
+  final List<String> tabs;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asynctabs = ref.watch(tabListNotifierProvider);

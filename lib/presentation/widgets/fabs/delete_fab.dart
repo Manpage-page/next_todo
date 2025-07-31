@@ -4,8 +4,8 @@ import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
-import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
-import 'package:next_todo/domain/repository/todo_repository.dart'; // ← これが必要
+//import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
+//import 'package:next_todo/domain/repository/todo_repository.dart'; // ← これが必要
 
 class DeleteFAB extends ConsumerWidget {
   const DeleteFAB({super.key});
@@ -23,11 +23,11 @@ class DeleteFAB extends ConsumerWidget {
     final tabs = asyncTabs.value ?? ['+'];
     final currentTabName = tabs[currentIndex];
 
-    final todoRepositoryImplProvider = Provider<TodoRepository>(
+    /*final todoRepositoryImplProvider = Provider<TodoRepository>(
       (ref) => TodoRepositoryImpl(),
-    );
+    );*/
 
-    final repository = ref.read(todoRepositoryImplProvider);
+    //final repository = ref.read(todoRepositoryImplProvider);
 
     return FloatingActionButton(
       heroTag: 'delete',

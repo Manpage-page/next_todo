@@ -28,16 +28,24 @@ class HomeScreen extends ConsumerWidget {
           ),
 
       data: (tabs) {
+        // '+'を常に右端に固定する
+        final normalTabs = tabs.where((t) => t != '+').toList();
+        final fixedTabs = [...normalTabs, '+'];
+
         return DefaultTabController(
-          length: tabs.length, // ← ここは List<String> なので OK
+          key: ValueKey(fixedTabs.length),
+          length: fixedTabs.length, // ← ここは List<String> なので OK
           child: Scaffold(
             backgroundColor: Colors.black,
             appBar: const AppbarWidget(),
             drawer: DrawerWidget(),
             body: Column(
               children: [
-                const TabbarWidget(),
-                Expanded(child: const TabbarviewWidget()),
+                TabbarWidget(tabs: fixedTabs), //タブバーを表示
+
+                Expanded(
+                  child: TabbarviewWidget(tabs: fixedTabs),
+                ), //タブバーに対応するリストを表示
               ],
             ),
             floatingActionButton: const FloatingWidget(),
@@ -46,20 +54,5 @@ class HomeScreen extends ConsumerWidget {
         );
       },
     );
-
-    /*DefaultTabController(
-      length: asynctabs.length, // タブの数(一応プログラムが動くようにtabsにしているが本来はnormalTabs)
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        appBar: const AppbarWidget(),
-        drawer: DrawerWidget(),
-        body: Column(
-          children: [TabbarWidget(), Expanded(child: TabbarviewWidget())],
-        ),
-
-        floatingActionButton: FloatingWidget(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      ),
-    );*/
   }
 }
