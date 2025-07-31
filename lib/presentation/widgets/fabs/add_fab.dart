@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
+import 'package:next_todo/presentation/widgets/add_todo_sheet.dart';
 
 class AddFAB extends ConsumerWidget {
   const AddFAB({super.key});
@@ -36,42 +36,26 @@ class AddFAB extends ConsumerWidget {
     return FloatingActionButton(
       heroTag: 'add',
       onPressed: () {
-        showDialog(
+        showModalBottomSheet(
           context: context,
-          builder: (context) {
-            String inputText = '';
-            return AlertDialog(
-              title: Text('やることを追加'),
-              content: TextField(
-                autofocus: true,
-                onChanged: (value) => inputText = value,
-                decoration: InputDecoration(hintText: '例: 散歩に行く'),
+          isScrollControlled: true,
+          backgroundColor: const Color.fromARGB(255, 28, 28, 28), // 黒背景
+          shape: const RoundedRectangleBorder(
+            // 角丸ヘッダー
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          builder:
+              (_) => Padding(
+                // キーボード高さだけ余白を確保
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: AddTodoSheet(
+                  // 下で定義する本体
+                  tabName: currentTabName,
+                  repository: repository,
+                ),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text('キャンセル'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    if (inputText.trim().isNotEmpty) {
-                      final notifier = ref.read(
-                        todoListNotifierProvider(currentTabName).notifier,
-                      );
-                      notifier.addTodo(inputText.trim());
-                      final todos = ref.read(
-                        todoListNotifierProvider(currentTabName),
-                      );
-
-                      await repository.saveTodos(currentTabName, todos); //セーブする
-                    }
-                    Navigator.pop(context);
-                  },
-                  child: Text('追加'),
-                ),
-              ],
-            );
-          },
         );
       },
       backgroundColor: AppColors.emeraldgreen,

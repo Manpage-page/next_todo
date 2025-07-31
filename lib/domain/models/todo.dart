@@ -8,6 +8,9 @@ abstract class Todo with _$Todo {
     required String id,
     required String title,
     @Default(false) bool isDone, //デフォルト値はfalse
+    @Default(0xFFFFFFFF) int color,
+    required DateTime createdAt,
+    DateTime? dueDate,
   }) = _Todo;
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);

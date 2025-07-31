@@ -75,7 +75,7 @@ class _TodoListTabState extends ConsumerState<TodoListTab> {
               title: Text(
                 todo.title,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color(todo.color),
                   // 完了済みなら打ち消し線（取り消し線）を表示
                   decoration:
                       todo.isDone

@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/application/state/providers/todo_repository_provider.dart';
 import 'package:uuid/uuid.dart';
-
+import 'dart:ui' show Color;
 part 'todolist_notifier.g.dart';
 
 @riverpod
@@ -24,19 +24,22 @@ class TodoListNotifier extends _$TodoListNotifier {
     state = loaded;
   }
 
-  void addTodo(String title) async {
+  void addTodo(String title, {required Color color, DateTime? dueDate}) async {
     final uuid = Uuid(); // ← インスタンス生成
     final newTodo = Todo(
       id: uuid.v4(), // ← UUIDをIDに
       title: title,
+      createdAt: DateTime.now(),
+      color: color.value,
+      dueDate: dueDate,
     );
     state = [...state, newTodo];
-    await _repo.saveTodos(tabTitle, state);
+    await _repo.saveTodos(_currentTab, state);
   }
 
   void removeTodo(int index) async {
     state = [...state]..removeAt(index);
-    await _repo.saveTodos(tabTitle, state);
+    await _repo.saveTodos(_currentTab, state);
   }
 
   void removeCompleted() async {
@@ -52,7 +55,7 @@ class TodoListNotifier extends _$TodoListNotifier {
         else
           state[i],
     ];
-    await _repo.saveTodos(tabTitle, state);
+    await _repo.saveTodos(_currentTab, state);
   }
 
   void reorder(int oldIndex, int newIndex) async {

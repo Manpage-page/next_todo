@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Todo {
 
- String get id; String get title; bool get isDone;
+ String get id; String get title; bool get isDone;//デフォルト値はfalse
+ int get color; DateTime get createdAt; DateTime? get dueDate;
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +30,16 @@ $TodoCopyWith<Todo> get copyWith => _$TodoCopyWithImpl<Todo>(this as Todo, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDone, isDone) || other.isDone == isDone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isDone);
+int get hashCode => Object.hash(runtimeType,id,title,isDone,color,createdAt,dueDate);
 
 @override
 String toString() {
-  return 'Todo(id: $id, title: $title, isDone: $isDone)';
+  return 'Todo(id: $id, title: $title, isDone: $isDone, color: $color, createdAt: $createdAt, dueDate: $dueDate)';
 }
 
 
@@ -49,7 +50,7 @@ abstract mixin class $TodoCopyWith<$Res>  {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) _then) = _$TodoCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, bool isDone
+ String id, String title, bool isDone, int color, DateTime createdAt, DateTime? dueDate
 });
 
 
@@ -66,12 +67,15 @@ class _$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? isDone = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? isDone = null,Object? color = null,Object? createdAt = null,Object? dueDate = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDone: null == isDone ? _self.isDone : isDone // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -82,12 +86,16 @@ as bool,
 @JsonSerializable()
 
 class _Todo implements Todo {
-  const _Todo({required this.id, required this.title, this.isDone = false});
+  const _Todo({required this.id, required this.title, this.isDone = false, this.color = 0xFFFFFFFF, required this.createdAt, this.dueDate});
   factory _Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
 @override final  String id;
 @override final  String title;
 @override@JsonKey() final  bool isDone;
+//デフォルト値はfalse
+@override@JsonKey() final  int color;
+@override final  DateTime createdAt;
+@override final  DateTime? dueDate;
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
@@ -102,16 +110,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDone, isDone) || other.isDone == isDone));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Todo&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.isDone, isDone) || other.isDone == isDone)&&(identical(other.color, color) || other.color == color)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,isDone);
+int get hashCode => Object.hash(runtimeType,id,title,isDone,color,createdAt,dueDate);
 
 @override
 String toString() {
-  return 'Todo(id: $id, title: $title, isDone: $isDone)';
+  return 'Todo(id: $id, title: $title, isDone: $isDone, color: $color, createdAt: $createdAt, dueDate: $dueDate)';
 }
 
 
@@ -122,7 +130,7 @@ abstract mixin class _$TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$TodoCopyWith(_Todo value, $Res Function(_Todo) _then) = __$TodoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, bool isDone
+ String id, String title, bool isDone, int color, DateTime createdAt, DateTime? dueDate
 });
 
 
@@ -139,12 +147,15 @@ class __$TodoCopyWithImpl<$Res>
 
 /// Create a copy of Todo
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? isDone = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? isDone = null,Object? color = null,Object? createdAt = null,Object? dueDate = freezed,}) {
   return _then(_Todo(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,isDone: null == isDone ? _self.isDone : isDone // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,color: null == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,dueDate: freezed == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
