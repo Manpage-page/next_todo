@@ -21,9 +21,5 @@ class TabbarviewWidget extends ConsumerWidget {
         );
       },
     );
-
-    /*TabBarView(
-      children: [for (final tab in tabs) TodoListTab(tabTitle: tab)],
-    );*/
   }
 }

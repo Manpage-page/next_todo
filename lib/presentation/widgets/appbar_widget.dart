@@ -5,7 +5,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   const AppbarWidget({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // ← 高さ指定が必須
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight); //  高さ指定が必須
 
   @override
   Widget build(BuildContext context) {

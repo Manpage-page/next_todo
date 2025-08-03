@@ -18,10 +18,10 @@ class AddFAB extends ConsumerWidget {
     final asyncTabs = ref.watch(tabListNotifierProvider);
     // 3. ローディング or エラー時のフォールバック
     if (asyncTabs.isLoading) {
-      return const SizedBox.shrink(); // 読み込み中はFAB出さない（お好みで）
+      return const SizedBox.shrink();
     }
     if (asyncTabs.hasError) {
-      return const SizedBox.shrink(); // エラー時も非表示（お好みで）
+      return const SizedBox.shrink();
     }
 
     final tabs = asyncTabs.value ?? ['+'];
@@ -39,19 +39,16 @@ class AddFAB extends ConsumerWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
-          backgroundColor: const Color.fromARGB(255, 28, 28, 28), // 黒背景
+          backgroundColor: const Color.fromARGB(255, 28, 28, 28),
           shape: const RoundedRectangleBorder(
-            // 角丸ヘッダー
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           ),
           builder:
               (_) => Padding(
-                // キーボード高さだけ余白を確保
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: AddTodoSheet(
-                  // 下で定義する本体
                   tabName: currentTabName,
                   repository: repository,
                 ),
