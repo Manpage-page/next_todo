@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/presentation/widgets/appbar_widget.dart';
-import 'package:next_todo/presentation/widgets/drawer_widget.dart';
+import 'package:next_todo/presentation/widgets/drawers/drawer_widget.dart';
 import 'package:next_todo/presentation/widgets/fabs/floating_widget.dart';
 import 'package:next_todo/presentation/widgets/tabbar_widget.dart';
 import 'package:next_todo/presentation/widgets/tabbarview_widget.dart';

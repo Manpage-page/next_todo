@@ -12,8 +12,6 @@ class UndoFAB extends ConsumerWidget {
       heroTag: 'undo',
       //いったんundoをデバッグボタンにする
       onPressed: () async {
-        debugPrint('🌀 Debug dump start');
-
         final repo = ref.read(todoRepositoryProvider);
 
         final tabs = await repo.loadTabs();
