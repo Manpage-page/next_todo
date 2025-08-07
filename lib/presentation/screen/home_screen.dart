@@ -34,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
 
         return DefaultTabController(
           key: ValueKey(fixedTabs.length),
-          length: fixedTabs.length, // ← ここは List<String> なので OK
+          length: fixedTabs.length,
           child: Scaffold(
             backgroundColor: Colors.black,
             appBar: const AppbarWidget(),
