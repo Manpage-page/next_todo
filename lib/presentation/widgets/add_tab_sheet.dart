@@ -18,6 +18,12 @@ class _AddSimpleTodoSheetState extends ConsumerState<AddTabSheet> {
   final _controller = TextEditingController();
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -31,7 +37,7 @@ class _AddSimpleTodoSheetState extends ConsumerState<AddTabSheet> {
             style: const TextStyle(color: Colors.white, fontSize: 18),
             cursorColor: Colors.white,
             decoration: const InputDecoration(
-              hintText: 'タスクを入力',
+              hintText: 'タブ名を入力',
               hintStyle: TextStyle(color: Colors.white54),
               border: InputBorder.none,
             ),
@@ -72,24 +78,36 @@ class _AddSimpleTodoSheetState extends ConsumerState<AddTabSheet> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
+
                   onPressed: () async {
                     final name = _controller.text.trim();
                     if (name.isEmpty) return;
                     //タブを追加
 
-                    await ref
-                        .read(tabListNotifierProvider.notifier)
-                        .addTab(name);
+                    try {
+                      await ref
+                          .read(tabListNotifierProvider.notifier)
+                          .addTab(name);
 
-                    final tabs = ref.read(tabListNotifierProvider).value ?? [];
-                    final idx = tabs.indexOf(name);
-                    if (idx != -1) {
-                      ref
-                          .read(selectedIndexNotifierProvider.notifier)
-                          .update(idx);
-                    }
-                    if (mounted) {
-                      Navigator.pop(context);
+                      final updatedTabs =
+                          ref.read(tabListNotifierProvider).value ?? [];
+
+                      final index = updatedTabs.indexOf(name);
+                      if (index != -1) {
+                        ref
+                            .read(selectedIndexNotifierProvider.notifier)
+                            .update(index);
+                      }
+
+                      if (mounted) {
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('タブの追加に失敗しました: &e')),
+                        );
+                      }
                     }
                   },
                   child: const Text('追加'),

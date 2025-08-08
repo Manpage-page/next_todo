@@ -33,8 +33,11 @@ class HomeScreen extends ConsumerWidget {
         final fixedTabs = [...normalTabs, '+'];
 
         return DefaultTabController(
+          //tabとtabberviewを管理するためのwidget(lengthやindexの状態を保持)
           key: ValueKey(fixedTabs.length),
-          length: fixedTabs.length,
+
+          length: fixedTabs.length, //タブの数を指定
+
           child: Scaffold(
             backgroundColor: Colors.black,
             appBar: const AppbarWidget(),

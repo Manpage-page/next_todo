@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
-import 'package:next_todo/presentation/constants/colors.dart';
 
 class AddTodoSheet extends ConsumerStatefulWidget {
   const AddTodoSheet({required this.tabName, required this.repository});
@@ -18,17 +17,6 @@ class AddTodoSheet extends ConsumerStatefulWidget {
 class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
   final _controller = TextEditingController();
   Color _selected = Colors.white;
-
-  static const _palette = [
-    Colors.white,
-    Colors.pinkAccent,
-    Colors.lightGreen,
-    Colors.lightBlue,
-    Colors.deepPurpleAccent,
-    Colors.yellow,
-    Color(0xFF9E8C7A),
-    Colors.blueGrey,
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +46,7 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
           Wrap(
             spacing: 8,
             children:
-                _palette.map((c) {
+                AppColors.palette.map((c) {
                   final selected = c == _selected;
                   return GestureDetector(
                     onTap: () => setState(() => _selected = c),

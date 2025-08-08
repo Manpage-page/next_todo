@@ -2,7 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
-import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
+
+import 'package:next_todo/presentation/widgets/add_tab_sheet.dart';
 
 //画面上部のタブバーを管理するwidget
 class TabbarWidget extends ConsumerWidget {
@@ -10,12 +11,19 @@ class TabbarWidget extends ConsumerWidget {
   final List<String> tabs;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //final asynctabs = ref.watch(tabListNotifierProvider);
+    ref.listen<int>(selectedIndexNotifierProvider, (prev, next) {
+      final controller = DefaultTabController.maybeOf(context);
 
-    // return asynctabs.when(
-    // loading: () => const SizedBox.shrink(),
-    // error: (err, _) => Text('エラー: $err'),
-    // data: (tabs) {
+      if (controller == null) return; // DefaultTabController が無ければ何もしない
+      final clamped = next.clamp(
+        0,
+        (tabs.length - 1).clamp(0, tabs.length),
+      ); // 安全に範囲内へ
+      if (controller.index != clamped) {
+        controller.animateTo(clamped); // Tab をアニメーションで移動
+      }
+    });
+
     return TabBar(
       indicatorColor: AppColors.emeraldgreen, //選択されているタブの下線部
       labelColor: AppColors.emeraldgreen, //選択中のタブの文字色
@@ -36,39 +44,21 @@ class TabbarWidget extends ConsumerWidget {
         //+ボタンが押されたらタブを追加し、それ以外はselected_indexを更新する
         if (tabs[index] == '+') {
           //タブ追加時のダイアログ
-          showDialog(
+
+          showModalBottomSheet<void>(
             context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
             builder: (context) {
-              String tabName = '';
-              return AlertDialog(
-                title: const Text('タブを追加'),
-                content: TextField(
-                  autofocus: true,
-                  onChanged: (value) => tabName = value,
-                  decoration: const InputDecoration(hintText: '新しいタブ名を入力'),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('キャンセル'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (tabName.trim().isNotEmpty) {
-                        ref
-                            .read(tabListNotifierProvider.notifier)
-                            .addTab(tabName.trim());
-                      }
-                      Navigator.pop(context);
-                    },
-                    child: const Text('追加'),
-                  ),
-                ],
-              );
+              return const AddTabSheet();
             },
           );
         } else {
           ref.read(selectedIndexNotifierProvider.notifier).update(index);
+          final controller = DefaultTabController.maybeOf(context);
+          if (controller != null && controller.index != index) {
+            controller.animateTo(index);
+          }
         }
       },
     );

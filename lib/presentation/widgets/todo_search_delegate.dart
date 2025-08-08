@@ -11,11 +11,11 @@ class TodoSearchDelegate extends SearchDelegate<void> {
   final WidgetRef ref;
 
   @override
-  String get searchFieldLabel => '検索';
+  String get searchFieldLabel => '検索'; //ヒントテキスト
 
   @override
   TextStyle? get searchFieldStyle =>
-      const TextStyle(color: AppColors.emeraldgreen, fontSize: 18);
+      const TextStyle(color: Colors.white, fontSize: 18); //検索文字の設定
 
   @override
   InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
@@ -37,7 +37,10 @@ class TodoSearchDelegate extends SearchDelegate<void> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.arrow_back, color: AppColors.emeraldgreen),
+      icon: const Icon(
+        Icons.keyboard_arrow_left,
+        color: AppColors.emeraldgreen,
+      ),
       onPressed: () => close(context, null),
     );
   }
@@ -106,7 +109,9 @@ class TodoSearchDelegate extends SearchDelegate<void> {
 
     final tabs = tabsAsync.value ?? [];
 
-    final index = tabs.indexOf(item.tabName);
+    final index = tabs.indexWhere(
+      (tab) => tab == item.tabName,
+    ); //tabs.indexOf(item.tabName);
     if (index != -1) {
       ref.read(selectedIndexNotifierProvider.notifier).update(index);
     }
@@ -137,11 +142,14 @@ class _SuggestionList extends StatelessWidget {
           leading: const Icon(Icons.circle_outlined),
           title: Text(
             todo.title,
-            style: const TextStyle(color: AppColors.emeraldgreen, fontSize: 18),
+            style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
           subtitle: Text(
             todo.tabName,
-            style: const TextStyle(color: AppColors.emeraldgreen, fontSize: 12),
+            style: const TextStyle(
+              color: Color.fromARGB(255, 160, 160, 160),
+              fontSize: 12,
+            ),
           ),
           onTap: () => onSelected(todo),
         );

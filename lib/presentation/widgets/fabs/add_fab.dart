@@ -31,7 +31,6 @@ class AddFAB extends ConsumerWidget {
       (ref) => TodoRepositoryImpl(),
     );
     final repository = ref.read(todoRepositoryImplProvider);
-    //final todos = await repository.loadTodos();
 
     return FloatingActionButton(
       heroTag: 'add',
