@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'add_fab.dart';
 import 'delete_fab.dart';
-import 'undo_fab.dart';
+import 'extract_fab.dart';
 
 class FloatingWidget extends StatelessWidget {
   const FloatingWidget({super.key});
@@ -15,7 +15,7 @@ class FloatingWidget extends StatelessWidget {
         children: const [
           DeleteFAB(),
           SizedBox(width: 20),
-          UndoFAB(),
+          ExtractFAB(),
           SizedBox(width: 16),
           AddFAB(),
         ],

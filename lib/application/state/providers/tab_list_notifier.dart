@@ -46,6 +46,11 @@ class TabListNotifier extends _$TabListNotifier {
     //タブ一覧が読み込み中やエラーだったら、空リストとして扱う
     final current = state.asData?.value ?? [];
     final newList = current.where((t) => t != tab).toList();
+
+    if (newList.isEmpty) {
+      return newList.add('Todo');
+    }
+
     state = const AsyncLoading(); // 状態を読み込み中にして...
     await ref.read(todoRepositoryProvider).saveTabs(newList); //newListを保存する
     state = AsyncData(newList);
@@ -58,28 +63,34 @@ class TabListNotifier extends _$TabListNotifier {
   }
 
   Future<void> reorder(int oldIndex, int newIndex) async {
-    if (state is! AsyncData) return; // データが無ければ何もしない
-    var list = [...state.asData!.value];
-    final selected = ref.read(selectedIndexNotifierProvider);
-    final selectedTitle = list[selected];
+    final current = state.value ?? const <String>[];
+    var list = [...current];
+    if (oldIndex == newIndex || list.isEmpty) return;
 
-    // コピペ
+    final selected = ref.read(selectedIndexNotifierProvider);
+    final selectedTitle =
+        (selected >= 0 && selected < list.length) ? list[selected] : null;
+
     if (newIndex > oldIndex) newIndex -= 1;
-    //タブ削除でインデックスが範囲外になりエラーになるのを防止
     newIndex = newIndex.clamp(0, list.length - 1);
 
-    //並べ替え実行
     final moved = list.removeAt(oldIndex);
     list.insert(newIndex, moved);
 
-    //永続化とstate更新
-    state = const AsyncLoading();
-    await ref.read(todoRepositoryProvider).saveTabs(list);
+    // 楽観的更新
     state = AsyncData(list);
 
-    //選択中のタブの新しい位置を取得する
-    final newselected = list.indexOf(selectedTitle);
-    ref.read(selectedIndexNotifierProvider.notifier).update(newselected);
+    if (selectedTitle != null) {
+      final newSelected = list.indexOf(selectedTitle);
+      ref.read(selectedIndexNotifierProvider.notifier).update(newSelected);
+    }
+
+    // 裏で保存, 失敗したら前回値を保持したままエラー化
+    unawaited(
+      ref.read(todoRepositoryProvider).saveTabs(list).catchError((e, st) {
+        state = AsyncError<List<String>>(e, st).copyWithPrevious(state);
+      }),
+    );
   }
 
   Future<void> renameTab({

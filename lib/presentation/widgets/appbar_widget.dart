@@ -24,12 +24,12 @@ class AppbarWidget extends ConsumerWidget implements PreferredSizeWidget {
           icon: Icon(Icons.search),
         ),
         //設定ボタン
-        IconButton(
+        /*IconButton(
           onPressed: () {
             print('設定アイコンを押しました');
           },
           icon: Icon(Icons.settings_outlined),
-        ),
+        ),*/
       ],
     );
   }

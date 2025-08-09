@@ -24,6 +24,21 @@ class TodoListNotifier extends _$TodoListNotifier {
     state = loaded;
   }
 
+  void setDueDate(String id, DateTime? due) {
+    state = [
+      for (final t in state)
+        if (t.id == id) t.copyWith(dueDate: due) else t,
+    ];
+  }
+
+  void toggleDoneById(String id) async {
+    final i = state.indexWhere((t) => t.id == id);
+    if (i == -1) return;
+    final updated = state[i].copyWith(isDone: !state[i].isDone);
+    state = [...state]..[i] = updated; // 先にUI反映
+    await _repo.saveTodos(_currentTab, state);
+  }
+
   void addTodo(String title, {required Color color, DateTime? dueDate}) async {
     final uuid = Uuid(); // ← インスタンス生成
     final newTodo = Todo(

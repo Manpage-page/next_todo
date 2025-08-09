@@ -25,9 +25,9 @@ class DrawerWidget extends ConsumerWidget {
               child: Text('メニュー', style: TextStyle(color: Colors.white)),
             ),
           ),
-          _MenuTile(label: 'カレンダー', icon: Icons.calendar_today),
-          _MenuTile(label: '期限付き', icon: Icons.event_note),
-          _MenuTile(label: 'ゴミ箱', icon: Icons.delete),
+          // _MenuTile(label: 'カレンダー', icon: Icons.calendar_today),
+          // _MenuTile(label: '期限付き', icon: Icons.event_note),
+          // _MenuTile(label: 'ゴミ箱', icon: Icons.delete),
           const SizedBox(height: 24),
 
           Row(
@@ -35,13 +35,13 @@ class DrawerWidget extends ConsumerWidget {
             children: [
               const Text('作成したリスト', style: TextStyle(color: Colors.white)),
               TextButton(
+                //並び替え・編集ボタンで編集画面へ遷移
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const TabReorderScreen()),
                   );
                 },
-
                 child: const Text(
                   '並び替え・編集',
                   style: TextStyle(color: AppColors.emeraldgreen),
@@ -60,11 +60,11 @@ class DrawerWidget extends ConsumerWidget {
                     for (final t in tabs)
                       ListTile(
                         dense: true,
-                        leading: const Icon(
+                        /*leading: const Icon( //いったんICONは無しの方針で
                           Icons.radio_button_off,
                           size: 18,
                           color: Colors.white70,
-                        ),
+                        ),*/
                         title: Text(
                           t,
                           style: const TextStyle(color: Colors.white),
@@ -87,6 +87,7 @@ class DrawerWidget extends ConsumerWidget {
   }
 }
 
+//drawerのメニュー項目（まだ未実装）
 class _MenuTile extends StatelessWidget {
   const _MenuTile({required this.label, required this.icon});
   final String label;
@@ -97,7 +98,7 @@ class _MenuTile extends StatelessWidget {
     return ListTile(
       leading: Icon(icon, color: Colors.white70),
       title: Text(label, style: const TextStyle(color: Colors.white)),
-      onTap: () {}, // TODO: 画面遷移など
+      onTap: () {}, //画面遷移など
     );
   }
 }

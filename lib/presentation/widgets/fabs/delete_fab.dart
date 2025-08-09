@@ -12,13 +12,15 @@ class DeleteFAB extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(selectedIndexNotifierProvider);
 
+    //タブ一覧
     final asyncTabs = ref.watch(tabListNotifierProvider);
 
+    // タブ一覧が読み込み中、またはエラーの場合はFABを表示しない
     if (asyncTabs.isLoading || asyncTabs.hasError) {
       return const SizedBox.shrink();
     }
 
-    final tabs = asyncTabs.value ?? ['+'];
+    final tabs = asyncTabs.value ?? ['+']; //　＋は修正予定
     final currentTabName = tabs[currentIndex];
 
     return FloatingActionButton(

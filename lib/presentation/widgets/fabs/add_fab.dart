@@ -12,14 +12,15 @@ class AddFAB extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 1. 選択中インデックス
+    // 選択中インデックス
     final currentIndex = ref.watch(selectedIndexNotifierProvider);
-    // 2. タブ一覧（AsyncValue）を取得
+    // タブ一覧（AsyncValue）を取得
     final asyncTabs = ref.watch(tabListNotifierProvider);
-    // 3. ローディング or エラー時のフォールバック
+    // タブ一覧が読み込み中なら何も表示せず
     if (asyncTabs.isLoading) {
       return const SizedBox.shrink();
     }
+    //エラーの際も表示しない
     if (asyncTabs.hasError) {
       return const SizedBox.shrink();
     }

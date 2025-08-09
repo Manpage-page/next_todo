@@ -3,9 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
+import 'package:next_todo/presentation/utils/date_time_picker.dart';
+import 'package:intl/intl.dart';
 
 class AddTodoSheet extends ConsumerStatefulWidget {
-  const AddTodoSheet({required this.tabName, required this.repository});
+  const AddTodoSheet({
+    required this.tabName,
+    required this.repository,
+    super.key,
+  });
 
   final String tabName;
   final TodoRepository repository;
@@ -18,11 +24,16 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
   final _controller = TextEditingController();
   Color _selected = Colors.white;
 
+  DateTime? _dueDate;
+
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(
       todoListNotifierProvider(widget.tabName).notifier,
     );
+
+    final dueLabel =
+        _dueDate != null ? DateFormat('M/d HH:mm').format(_dueDate!) : '期限・通知';
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -42,7 +53,7 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
           ),
           const SizedBox(height: 12),
 
-          //色を変更する項目
+          // 色選択
           Wrap(
             spacing: 8,
             children:
@@ -71,25 +82,35 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _DateChip(
-                label: '期限・通知',
-                onTap: () {
-                  /* DatePickerなど */
+                label: dueLabel,
+                onTap: () async {
+                  final picked = await pickDateTime(context, initial: _dueDate);
+                  if (picked != null) {
+                    setState(() => _dueDate = picked);
+                  }
                 },
+                onLongPress: () => setState(() => _dueDate = null),
               ),
               _DateChip(
                 label: '今日',
                 onTap: () {
-                  /* 〃 */
+                  setState(() => _dueDate = endOfDay(DateTime.now()));
                 },
               ),
               _DateChip(
                 label: '明日',
                 onTap: () {
-                  /* 〃 */
+                  setState(
+                    () =>
+                        _dueDate = endOfDay(
+                          DateTime.now().add(const Duration(days: 1)),
+                        ),
+                  );
                 },
               ),
             ],
           ),
+
           const SizedBox(height: 24),
           Row(
             children: [
@@ -110,14 +131,12 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
                   child: const Text('閉じる'),
                 ),
               ),
-
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.emeraldgreen,
                     foregroundColor: Colors.black,
-
                     padding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 12,
@@ -129,17 +148,16 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
                   onPressed: () async {
                     final text = _controller.text.trim();
                     if (text.isEmpty) return;
-                    notifier.addTodo(
-                      text,
-                      color: _selected, // Todoモデルに色を持たせておく
-                    );
+
+                    notifier.addTodo(text, color: _selected, dueDate: _dueDate);
+
                     final todos = ref.read(
                       todoListNotifierProvider(widget.tabName),
                     );
                     await widget.repository.saveTodos(widget.tabName, todos);
+                    if (!mounted) return;
                     Navigator.pop(context);
                   },
-
                   child: const Text('追加'),
                 ),
               ),
@@ -152,14 +170,22 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
 }
 
 class _DateChip extends StatelessWidget {
-  const _DateChip({required this.label, required this.onTap});
+  const _DateChip({
+    required this.label,
+    required this.onTap,
+    this.onLongPress,
+    //super.key,
+  });
+
   final String label;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
       onPressed: onTap,
+      onLongPress: onLongPress,
       icon: const Icon(Icons.event, size: 18),
       label: Text(label),
       style: OutlinedButton.styleFrom(

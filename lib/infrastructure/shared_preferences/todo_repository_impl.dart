@@ -31,13 +31,13 @@ class TodoRepositoryImpl implements TodoRepository {
     //もしリストにデータが存在しないor中身がない場合
     if (saved == null || saved.isEmpty) {
       //デフォルトのタブを保存して返す
-      final defaultTabs = ['Todo', '+'];
+      final defaultTabs = ['Todo'];
       await p.setStringList(
         _tabsKey,
         defaultTabs,
       ); //tabsKey：保存するためのキー、defaulttabs：保存するデータ
       return defaultTabs;
-      // 'tabs':['Todo', '+']となる
+      // 'tabs':['Todo']となる
     }
 
     return saved; //すでに保存されているものを返す
