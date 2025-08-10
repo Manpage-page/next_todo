@@ -3,10 +3,21 @@
 flutterで作成したAIを搭載したtodoアプリです
 通常のtodoアプリとしての機能に加えて入力欄に文章を入力するとAIが内容を自動で分割、優先度をつけ、タスクを追加することができます。
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" width="100" alt="スクリーンショット 2025-08-10 145951" />
+  <img src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" width="250" alt="スクリーンショット 2025-08-10 145951" />
 </p>
 基本画面は上の通りで右上Appbarには検索ボタン、その下’＋’ボタンはタブ追加ボタン、左に並んでいるのがタブです。
 また、下のFABは左から削除ボタン、AI呼び出しボタン、タスク追加ボタンです。
+
+タスク追加ボタンを押すと以下のように入力画面が開きます
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/22b92384-d71e-4268-a5f8-e96629b6ce96" width="300" alt="スクリーンショット 2025-08-10 150615" />
+</p>
+
+タブ追加ボタンを押すと以下のようにタブ名入力画面が開きます
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/df2d4116-0e63-4951-a580-7dbe173c273e" width="300" alt="スクリーンショット 2025-08-10 150746" />
+</p>
+
 
 
 ##
@@ -25,7 +36,8 @@ flutterで作成したAIを搭載したtodoアプリです
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project
+is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
@@ -36,4 +48,5 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
 
