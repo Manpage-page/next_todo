@@ -2,7 +2,9 @@
 
 flutterで作成したAIを搭載したtodoアプリです
 通常のtodoアプリとしての機能に加えて入力欄に文章を入力するとAIが内容を自動で分割、優先度をつけ、タスクを追加することができます。
-<img width="664" height="1436" alt="スクリーンショット 2025-08-10 145951" src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" width="300" alt="スクリーンショット 2025-08-10 145951" />
+</p>
 
 ##
 - Uiの改善
