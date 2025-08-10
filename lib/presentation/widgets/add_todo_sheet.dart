@@ -6,6 +6,7 @@ import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 import 'package:next_todo/presentation/utils/date_time_picker.dart';
 import 'package:intl/intl.dart';
 
+//タスクを追加するためのシートのUI
 class AddTodoSheet extends ConsumerStatefulWidget {
   const AddTodoSheet({
     required this.tabName,
@@ -13,8 +14,8 @@ class AddTodoSheet extends ConsumerStatefulWidget {
     super.key,
   });
 
-  final String tabName;
-  final TodoRepository repository;
+  final String tabName; //追加先のタブ名
+  final TodoRepository repository; // 永続化のためにのリポジトリ
 
   @override
   ConsumerState<AddTodoSheet> createState() => _AddTodoSheetState();
@@ -22,16 +23,25 @@ class AddTodoSheet extends ConsumerStatefulWidget {
 
 class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
   final _controller = TextEditingController();
-  Color _selected = Colors.white;
+  Color _selected = Colors.white; // 入力時の色選択
 
-  DateTime? _dueDate;
+  DateTime? _dueDate; // 期限
+
+  @override
+  void dispose() {
+    // TextEditingControllerを破棄してメモリにたまるのを防ぐ
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    //現在のタブのnotifierを取得
     final notifier = ref.read(
       todoListNotifierProvider(widget.tabName).notifier,
     );
 
+    //期限ラベル：期限を追加してない場合は'期限・通知'が表示される
     final dueLabel =
         _dueDate != null ? DateFormat('M/d HH:mm').format(_dueDate!) : '期限・通知';
 

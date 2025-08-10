@@ -4,6 +4,7 @@ import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/presentation/widgets/gemini_widget.dart/add_from_text_sheet.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
+import 'package:next_todo/presentation/constants/colors.dart';
 
 //extractボトムシートを開くためのFAB
 class ExtractFAB extends ConsumerWidget {
@@ -28,6 +29,7 @@ class ExtractFAB extends ConsumerWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          backgroundColor: AppColors.grey,
           builder: (_) => AddFromTextSheet(currentTab: currentTab),
         );
       },

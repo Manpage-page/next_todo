@@ -97,19 +97,33 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
           mainAxisSize: MainAxisSize.min, //必要な高さだけ使う設定
           children: [
             TextField(
+              style: const TextStyle(color: Colors.white),
               controller: controller, //入力を保持・操作
               maxLines: 10, //10行まで入力可
               decoration: const InputDecoration(
                 hintText: '長文を貼り付け（例：メール対応）',
+                hintStyle: TextStyle(color: AppColors.emeraldgreen),
                 filled: true, //背景塗りつぶし
+                fillColor: Colors.black,
               ),
             ),
             const SizedBox(height: 12),
             Row(
               children: [
                 //タスク抽出ボタン
-                ElevatedButton(
+                OutlinedButton(
                   onPressed: loading ? null : _extract,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.emeraldgreen,
+                    side: const BorderSide(color: AppColors.emeraldgreen),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
                   child: const Text('タスク抽出'),
                 ),
 
@@ -117,8 +131,19 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
 
                 // draftsに抽出結果がある場合は追加ボタンを表示する
                 if (drafts.isNotEmpty)
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: _addSelected,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.emeraldgreen,
+                      side: const BorderSide(color: AppColors.emeraldgreen),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                    ),
                     child: Text('選択した${selected.length}件を追加'),
                   ),
               ],
@@ -146,6 +171,8 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
                     final checked = selected.contains(i); // 選択状態
 
                     return CheckboxListTile(
+                      activeColor: Colors.transparent,
+                      checkColor: AppColors.emeraldgreen,
                       value: checked,
                       onChanged: (v) {
                         setState(() {
@@ -156,22 +183,66 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
                           }
                         });
                       },
-                      title: Text(d.title), //タスク名
+                      title: Text(
+                        d.title,
+                        style: TextStyle(color: Colors.white),
+                      ), //タスク名
 
-                      subtitle:
-                          [
-                                if (d.note != null) d.note!,
-                                if (d.due != null) '期限: ${d.due}',
-                                if (d.priority != null) '優先度: ${d.priority}',
-                              ].whereType<String>().isEmpty
-                              ? null
-                              : Text(
-                                [
-                                  if (d.note != null) d.note!,
-                                  if (d.due != null) '期日: ${d.due}',
-                                  if (d.priority != null) '優先度: ${d.priority}',
-                                ].join(' / '),
+                      subtitle: Text.rich(
+                        TextSpan(
+                          children: [
+                            if (d.note != null)
+                              const TextSpan(
+                                text: 'メモ: ',
+                                style: TextStyle(color: Colors.white38),
                               ),
+                            if (d.note != null)
+                              const TextSpan(text: ''), // 区切りなしなら消してOK
+                            if (d.note != null)
+                              TextSpan(
+                                text: d.note!,
+                                style: const TextStyle(color: Colors.white70),
+                              ),
+
+                            if (d.due != null && d.note != null)
+                              const TextSpan(
+                                text: '  /  ',
+                                style: TextStyle(color: Colors.white24),
+                              ),
+                            if (d.due != null)
+                              const TextSpan(
+                                text: '期日: ',
+                                style: TextStyle(color: Colors.white38),
+                              ),
+                            if (d.due != null)
+                              TextSpan(
+                                text: d.due!,
+                                style: const TextStyle(
+                                  color: Colors.orangeAccent,
+                                ),
+                              ),
+
+                            if (d.priority != null &&
+                                (d.note != null || d.due != null))
+                              const TextSpan(
+                                text: '  /  ',
+                                style: TextStyle(color: Colors.white24),
+                              ),
+                            if (d.priority != null)
+                              const TextSpan(
+                                text: '優先度: ',
+                                style: TextStyle(color: Colors.white38),
+                              ),
+                            if (d.priority != null)
+                              TextSpan(
+                                text: d.priority!,
+                                style: TextStyle(
+                                  color: _priorityToColor(d.priority),
+                                ), // 既存の関数を活用
+                              ),
+                          ],
+                        ),
+                      ),
                     );
                   },
                 ),
