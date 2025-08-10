@@ -2,7 +2,7 @@
 
 flutterで作成したAIを搭載したtodoアプリです
 通常のtodoアプリとしての機能に加えて入力欄に文章を入力するとAIが内容を自動で分割、優先度をつけ、タスクを追加することができます。
-
+<img width="664" height="1436" alt="スクリーンショット 2025-08-10 145951" src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" />
 
 ##
 - Uiの改善
@@ -24,11 +24,11 @@ This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter<img width="497" height="604" alt="スクリーンショット 2025-08-10 145000" src="https://github.com/user-attachments/assets/326f0d83-88c3-435b-b81c-97510bb09a15" />
+- [Lab: Write your first Flutter app](https://docs.flutter
 .dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-<img width="664" height="1436" alt="スクリーンショット 2025-08-10 145951" src="https://github.com/user-attachments/assets/8328784e-bc44-463c-9b24-1458ff9ec798" />
+
