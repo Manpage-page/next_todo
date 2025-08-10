@@ -23,6 +23,10 @@ class TaskExtractService {
 
   /// 長文からタスク配列を抽出
   Future<List<TaskDraft>> splitTasks(String input) async {
+    // 日本時間の現在年を取得
+    final jstNow = DateTime.now().toUtc().add(const Duration(hours: 9));
+    final currentYear = jstNow.year;
+
     // 出力スキーマ（タスクの配列をトップレベルに）
     final taskSchema = Schema.array(
       items: Schema.object(
@@ -53,6 +57,7 @@ class TaskExtractService {
 - 各要素は {title, note?, due?, priority?}。
 - titleは5〜30文字程度の命令形。絵文字や番号は不要。
 - dueは分かる場合のみ "YYYY-MM-DD"（日本時間）で。
+- 年が書かれていない日付は $currentYear 年として解釈する（日本時間）。
 - priorityは推定して low/normal/high のいずれか。
 入力:
 $input
