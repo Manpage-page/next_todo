@@ -40,6 +40,26 @@ flutterで作成したAIを搭載したtodoアプリです
   <img src="https://github.com/user-attachments/assets/2ef5a9d8-b0ca-4122-9c6e-4c4a2e3b39f4" width="300" alt="スクリーンショット" />
 </p>
 
+この画面ではタブの削除と並び替えを行うことができます
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7fa7f19d-e6d9-4014-849e-593cd5b0f249" width="300" alt="スクリーンショット" />
+</p>
+
+AI呼び出しボタンを開くと、以下のように文章を入力・貼り付けることができます
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/368b1d84-82ea-43f6-9824-314356a530c3" width="300" alt="スクリーンショット 2025-08-10 152157" />
+</p>
+
+タスク抽出ボタンを押すと、内容の分割・期限設定・優先度を表示し、タスクの候補の一覧が出力されます。
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/36a82bc7-21f3-4017-861b-5b93dcc8d016" width="300" alt="スクリーンショット" />
+</p>
+
+タスク候補の中から、実際に追加したいものを選択し、選択したN件を追加を押すとタスクが追加されます
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c7d7531a-7f3e-4cc9-89c2-6b23af926930" width="300" alt="スクリーンショット" />
+</p>
+
 
 
 
@@ -49,7 +69,7 @@ flutterで作成したAIを搭載したtodoアプリです
 - ダークモード・ホワイトモードの切り替え
 - 設定項目・ドロワーのメニュー実装
 など...
-##<img width="693" height="1470" alt="スクリーンショット 2025-08-10 151119" src="https://github.com/user-attachments/assets/47d2085d-932f-423e-9ac7-3e2f91cb6b29" />
+
 
 さらに追加したい内容として
 
