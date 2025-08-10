@@ -57,9 +57,10 @@ AI呼び出しボタンを開くと、以下のように文章を入力・貼り
 
 タスク候補の中から、実際に追加したいものを選択し、選択したN件を追加を押すとタスクが追加されます
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c7d7531a-7f3e-4cc9-89c2-6b23af926930" width="300" alt="スクリーンショット" />
-    <img src="https://github.com/user-attachments/assets/39e26aca-1133-4a46-97bf-0a4006ff77e3" width="250" alt="スクリーンショット 2025-08-10 153028" />
+  <img src="https://github.com/user-attachments/assets/c7d7531a-7f3e-4cc9-89c2-6b23af926930" height="300" alt="スクリーンショット" />
+  <img src="https://github.com/user-attachments/assets/39e26aca-1133-4a46-97bf-0a4006ff77e3" height="300" alt="スクリーンショット 2025-08-10 153028" />
 </p>
+
 
 
 
