@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 
-//このモデルは今後ドメイン層に移行予定
 class TodoWithTab {
   TodoWithTab({
     required this.title,
