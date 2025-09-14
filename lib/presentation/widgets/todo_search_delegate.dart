@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
-import 'package:next_todo/application/state/all_todos_provider.dart';
+import 'package:next_todo/application/usecases/all_todos_provider.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
 import 'package:next_todo/application/state/providers/todolist_notifier.dart';
 
