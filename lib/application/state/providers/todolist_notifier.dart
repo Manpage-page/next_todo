@@ -24,11 +24,23 @@ class TodoListNotifier extends _$TodoListNotifier {
     state = loaded;
   }
 
-  void setDueDate(String id, DateTime? due) {
-    state = [
+  Future<void> setDueDate(String id, DateTime? due) async {
+    var hasUpdated = false;
+    final updated = [
       for (final t in state)
-        if (t.id == id) t.copyWith(dueDate: due) else t,
+        if (t.id == id)
+          () {
+            hasUpdated = true;
+            return t.copyWith(dueDate: due);
+          }()
+        else
+          t,
     ];
+    if (!hasUpdated) {
+      return;
+    }
+    state = updated;
+    await _repo.saveTodos(_currentTab, state);
   }
 
   void toggleDoneById(String id) async {

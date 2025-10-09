@@ -105,7 +105,7 @@ class _AddSimpleTodoSheetState extends ConsumerState<AddTabSheet> {
                     } catch (e) {
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('タブの追加に失敗しました: &e')),
+                          SnackBar(content: Text('タブの追加に失敗しました: $e')),
                         );
                       }
                     }

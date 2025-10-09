@@ -21,6 +21,7 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
   final selected = <int>{}; //選択したタスクのインデックスを保持
   bool loading = false; //抽出処理進行中か否か
   String? error;
+  String? info;
 
   //文字列の日付をDateTimeオブジェクトに変換
   DateTime? _parseDue(String? s) =>
@@ -45,6 +46,7 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
     setState(() {
       loading = true;
       error = null;
+      info = null;
       drafts = [];
       selected.clear();
     });
@@ -52,15 +54,35 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
       //taskExtractServiceProviderでテキストをタスクに分割
       final svc = ref.read(taskExtractServiceProvider);
       final res = await svc.splitTasks(controller.text.trim());
+      if (!mounted) return;
       //抽出結果をdraftsに代入
       setState(() {
         drafts = res;
+        info = res.isEmpty
+            ? 'タスク候補が見つかりませんでした。入力内容を見直して再度お試しください。'
+            : null;
+      });
+    } on MissingGeminiApiKeyException {
+      if (!mounted) return;
+      setState(() {
+        info = null;
+        error =
+            'Gemini APIキーが設定されていません。flutter run --dart-define=GEMINI_API_KEY=YOUR_KEY で指定してください。';
+      });
+    } on TaskExtractionException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        info = null;
+        error = e.message;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
+        info = null;
         error = '抽出に失敗しました: $e';
       });
     } finally {
+      if (!mounted) return;
       //ローディング終了
       setState(() {
         loading = false;
@@ -70,6 +92,13 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
 
   //選択されたタスクをtodoリストに追加する
   Future<void> _addSelected() async {
+    if (selected.isEmpty) {
+      setState(() {
+        error = null;
+        info = '追加するタスクを少なくとも1件選択してください。';
+      });
+      return;
+    }
     //currentTabのnotifierを取得
     final notifier = ref.read(
       todoListNotifierProvider(widget.currentTab).notifier,
@@ -132,7 +161,7 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
                 // draftsに抽出結果がある場合は追加ボタンを表示する
                 if (drafts.isNotEmpty)
                   OutlinedButton(
-                    onPressed: _addSelected,
+                    onPressed: selected.isEmpty ? null : _addSelected,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppColors.emeraldgreen,
                       side: const BorderSide(color: AppColors.emeraldgreen),
@@ -158,6 +187,8 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
             //エラー表示
             if (error != null)
               Text(error!, style: const TextStyle(color: Colors.red)),
+            if (info != null && error == null)
+              Text(info!, style: const TextStyle(color: Colors.white70)),
             //抽出結果リスト
             if (drafts.isNotEmpty) ...[
               const Divider(),
@@ -252,5 +283,11 @@ class _AddFromTextSheetState extends ConsumerState<AddFromTextSheet> {
         ),
       ),
     );
+}
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

@@ -3,6 +3,8 @@
 flutterで作成したAIを搭載したtodoアプリです  
 通常のtodoアプリとしての機能に加えて入力欄に文章を入力するとAIが内容を自動で分割、優先度をつけ、タスクを追加することができます。  
 APIはgeminiを使用しており、現段階ではAPIキーを実行の際に入力することでAI機能を使うことができます。
+ローカルでの動作確認やテストの流れは [docs/TESTING_AND_DEBUGGING.md](docs/TESTING_AND_DEBUGGING.md) にまとめています。
+GitHub へのアップロード手順は [docs/GITHUB_UPLOAD.md](docs/GITHUB_UPLOAD.md) を参照してください。
 
 ## 作成したきっかけ
 複雑な長文を読み、それに従って作業をする場合、タスクを分割してtodoアプリに入れたいものの、何から始めたらいいかわからず、手につかない時もあると思います。  

@@ -46,19 +46,18 @@ class TabListNotifier extends _$TabListNotifier {
     //タブ一覧が読み込み中やエラーだったら、空リストとして扱う
     final current = state.asData?.value ?? [];
     final newList = current.where((t) => t != tab).toList();
-
-    if (newList.isEmpty) {
-      return newList.add('Todo');
-    }
+    final ensuredList = newList.isEmpty ? ['Todo'] : newList;
 
     state = const AsyncLoading(); // 状態を読み込み中にして...
-    await ref.read(todoRepositoryProvider).saveTabs(newList); //newListを保存する
-    state = AsyncData(newList);
+    await ref
+        .read(todoRepositoryProvider)
+        .saveTabs(ensuredList); // ensuredListを保存する
+    state = AsyncData(ensuredList);
     final sel = ref.read(selectedIndexNotifierProvider);
-    if (sel >= newList.length) {
+    if (sel >= ensuredList.length) {
       ref
           .read(selectedIndexNotifierProvider.notifier)
-          .update(newList.length - 1);
+          .update(ensuredList.length - 1);
     }
   }
 
@@ -98,8 +97,12 @@ class TabListNotifier extends _$TabListNotifier {
     required String newName,
   }) async {
     //線形探索で選択した名前(oldname)と一致するものを入力した名前(newname)に変更
+    final current = state.value;
+    if (current == null) {
+      return;
+    }
     final list = [
-      for (final t in state.asData!.value) t == oldName ? newName : t,
+      for (final t in current) t == oldName ? newName : t,
     ];
     state = const AsyncLoading();
     await ref.read(todoRepositoryProvider).saveTabs(list);
