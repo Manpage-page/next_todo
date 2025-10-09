@@ -4,7 +4,7 @@ import 'package:next_todo/application/services/task_extract_service.dart';
 
 final geminiModelProvider = Provider<GenerativeModel>((ref) {
   const apiKey = String.fromEnvironment('GEMINI_API_KEY');
-  return GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: apiKey);
+  return GenerativeModel(model: 'gemini-2.5-flash', apiKey: apiKey);
 });
 
 final taskExtractServiceProvider = Provider<TaskExtractService>((ref) {
