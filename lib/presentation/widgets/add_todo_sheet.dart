@@ -34,6 +34,22 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
     super.dispose();
   }
 
+  Future<void> _submit() async {
+    final text = _controller.text.trim();
+    if (text.isEmpty) return;
+
+    final notifier = ref.read(
+      todoListNotifierProvider(widget.tabName).notifier,
+    );
+    notifier.addTodo(text, color: _selected, dueDate: _dueDate);
+
+    final todos = ref.read(todoListNotifierProvider(widget.tabName));
+    await widget.repository.saveTodos(widget.tabName, todos);
+
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     //現在のタブのnotifierを取得
@@ -46,7 +62,12 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
         _dueDate != null ? DateFormat('M/d HH:mm').format(_dueDate!) : '期限・通知';
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: EdgeInsets.fromLTRB(
+        24,
+        12,
+        24,
+        12 + MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -60,6 +81,10 @@ class _AddTodoSheetState extends ConsumerState<AddTodoSheet> {
               hintStyle: TextStyle(color: Colors.white54),
               border: InputBorder.none,
             ),
+
+            onTapOutside: (_) => FocusScope.of(context).unfocus(),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _submit(),
           ),
           const SizedBox(height: 12),
 

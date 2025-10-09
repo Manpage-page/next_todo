@@ -28,6 +28,7 @@ class ExtractFAB extends ConsumerWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          useSafeArea: true,
           backgroundColor: AppColors.grey,
           builder: (_) => AddFromTextSheet(currentTab: currentTab),
         );

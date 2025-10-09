@@ -4,7 +4,7 @@ import 'package:next_todo/application/state/providers/selected_index_notifier.da
 import 'package:next_todo/application/state/providers/tab_list_notifier.dart';
 import 'package:next_todo/domain/repository/todo_repository.dart';
 import 'package:next_todo/presentation/constants/colors.dart';
-import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
+import 'package:next_todo/infrastructure/API/todo_repository_impl.dart';
 import 'package:next_todo/presentation/widgets/add_todo_sheet.dart';
 
 class AddFAB extends ConsumerWidget {
@@ -39,6 +39,7 @@ class AddFAB extends ConsumerWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          useSafeArea: true,
           backgroundColor: const Color.fromARGB(255, 28, 28, 28),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

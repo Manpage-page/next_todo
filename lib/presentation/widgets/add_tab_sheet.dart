@@ -1,5 +1,3 @@
-//現在このコードは使っていない
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:next_todo/application/state/providers/selected_index_notifier.dart';

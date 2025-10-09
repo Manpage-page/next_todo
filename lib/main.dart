@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:next_todo/presentation/screen/home_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:next_todo/infrastructure/shared_preferences/todo_repository_impl.dart';
+import 'package:next_todo/infrastructure/API/todo_repository_impl.dart';
 import 'package:next_todo/application/state/providers/todo_repository_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
