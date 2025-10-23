@@ -42,7 +42,7 @@ class _TodoListTabState extends ConsumerState<TodoListTab> {
 
     // Todoリストを表示するリストビュー
     return ReorderableListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(9),
       itemCount: todos.length,
       onReorder: notifier.reorder,
       buildDefaultDragHandles: false,
@@ -69,14 +69,14 @@ class _TodoListTabState extends ConsumerState<TodoListTab> {
           key: ValueKey(todo),
           index: index,
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 6),
+            margin: const EdgeInsets.symmetric(vertical: 3), // リスト間の余白
             decoration: BoxDecoration(
               color: AppColors.grey,
-              borderRadius: BorderRadius.circular(16), // リストの角を丸める
+              borderRadius: BorderRadius.circular(5), // リストの角を丸める
             ),
             child: ListTile(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(5), // ListTileの角を丸める（判定）
               ),
 
               // Todoの状態に応じてアイコンを切り替え

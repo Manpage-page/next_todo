@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:next_todo/application/services/gemini_client.dart';
 
 class TaskDraft {
   final String title;
@@ -18,8 +18,8 @@ class TaskDraft {
 }
 
 class TaskExtractService {
-  final GenerativeModel _model;
-  TaskExtractService(this._model);
+  final GeminiClient _client;
+  TaskExtractService(this._client);
 
   Future<List<TaskDraft>> splitTasks(String input) async {
     final prompt = '''
@@ -34,13 +34,9 @@ class TaskExtractService {
 $input
 ''';
 
-    final cfg = GenerationConfig(temperature: 0.2, maxOutputTokens: 1024);
+    // ここでプロキシ or GGA クライアントに委譲（Webではプロキシ）
+    final raw = await _client.generate(prompt, model: 'gemini-2.5-flash');
 
-    final res = await _model.generateContent([
-      Content.text(prompt),
-    ], generationConfig: cfg);
-
-    final raw = res.text ?? '[]';
     final parsed = _safeJsonDecode(raw);
     if (parsed is! List) return [];
     return parsed
@@ -49,7 +45,7 @@ $input
         .toList();
   }
 
-  // --- ここからJSON抽出ヘルパ ---
+  // --- JSON抽出ヘルパ（あなたの元コードをそのまま） ---
   dynamic _safeJsonDecode(String raw) {
     var s = raw.trim();
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:next_todo/presentation/widgets/todolist_UI_widget.dart';
 
 //生成されたタブの数と同数のtabbarviewを生成するwidget
+//tabbarviewとはタブごとにTodoリストを表示するもの
 class TabbarviewWidget extends StatelessWidget {
   const TabbarviewWidget({super.key, required this.tabs});
   final List<String> tabs;
