@@ -1,6 +1,8 @@
 # next_todo
 
-現在未完成のFlutterのシンプルなtodoアプリです
+Flutterのシンプルなtodoアプリです
+
+https://ai-todo-3lr.pages.dev/
 
 問題点
 ##
