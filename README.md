@@ -1,4 +1,4 @@
-#NextTodo — AI がタスクを自動生成する TODO アプリ
+# NextTodo — AI がタスクを自動生成する TODO アプリ
 https://ai-todo-3lr.pages.dev/
 
 ## 📝 はじめに
@@ -67,9 +67,9 @@ AI が文章を解析してタスクを生成することで、
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/0523b366-2a56-436d-bdeb-28e19a44ecaf" /><br>
 検索ボタン下の＋ボタンを押すとタブを追加できます  
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/e2758461-3855-47f0-a140-e7bf677073e8" /><br>
-追加後はこのような表示になります
+追加後はこのような表示になります  
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/eb77c7b2-5b34-4648-965d-5c1fa53390a3" /><br>
-左側のドロワーを開き編集ボタンを押すとこのようにタブバーの編集ができます
+左側のドロワーを開き編集ボタンを押すとこのようにタブバーの編集ができます  
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/8b0f247b-b214-449c-a87c-21074732c610" /><br>
 
 ## AI機能について  
