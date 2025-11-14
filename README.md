@@ -1,35 +1,84 @@
-# next_todo
-
-Flutterのシンプルなtodoアプリです
-
+#NextTodo — AI がタスクを自動生成する TODO アプリ
 https://ai-todo-3lr.pages.dev/
 
-問題点
-##
-- ＋ボタンを押した際にtabbarviewも生成されてしまう
-- ファイルやその中身を全く整理できていないため、落ち着いたら要リファクタリング
-- 新しいタブを追加した際に、インデックスがそのタブに設定されない（というかタブのリストをいじると選択状態が必ずindex = 0になってしまう）
-- tab追加画面のUIを変更したらコードがうまく動かなくなった
-- 
-##
+## 📝 はじめに
+
+NextTodo は、文章を入力するだけで AI が自動でタスクを抽出し、  
+優先度・締め切りまで自動生成してくれる **AIタスク管理アプリ** です。  
+
+従来の「タスクを自分で整理する」手間をなくし、  
+**本当に取り組むべき行動に集中できる環境** をつくることを目的として開発しました。  
+
+Flutter × Gemini API による軽量・高速 UI で、  
+誰でも直感的に使える設計になっています。  
+
+---
+
+## 🎯 コンセプト
+-「やるべきことはあるのに、整理するのが面倒」  
+-「計画づくりに時間を使ってしまう」  
+-「学業・仕事・研究でタスクが散乱する」  
+  
+こういった課題を解決するため、  
+**“タスク整理の自動化” に取り組んだアプリ**が NextTodo です。  
+
+AI が文章を解析してタスクを生成することで、  
+ユーザーは **考える → 行動する** のサイクルにすぐ移れます。  
 
 
-現在の機能としては追加、削除のみとなっていますが
-今後実装予定の機能として
-##
-- Uiの改善
-- タスクの期限設定・カレンダー表示
-- ダークモード・ホワイトモードの切り替え
-- 設定項目・ドロワーのメニュー実装
-- 検索システム
-- undoボタンの実装
-など...
-##
-さらに追加したい内容として
+## 💻 使用技術
 
-- AIを用いて、過去のリストのパターンから新たなタスクの提案
-- 自分のやりたいことをAIに投げ込むことでその段階的なTodoリストを自動作成・カレンダーと自動連携
-- 過去期限を延ばしがちだったタスクを優先的に強調して表示するシステム
+| 種類      | 使用技術                        |
+| ------- | --------------------------- |
+| フロントエンド | **Flutter (Dart)**          |
+| 状態管理    | Riverpod                    |
+| ルーティング  | go_router                   |
+| モデル・型生成 | Freezed / json_serializable |
+| データ保存  | sharedPreferences             |
+| AI      | Google Gemini API           |
+| デプロイ    | Cloudflare Pages            |
+| 対応端末    | モバイル / Web                  |
+
+
+## ⚙️ 主な機能
+### ✔️ AI が文章からタスクを自動生成
+- 文章を投げるだけでタスク・優先度・締切案を自動抽出
+- Gemini API による解析
+- JSON 形式でタスクを返し、アプリ側で整形
+
+### ✔️ タスク管理（追加／編集／削除）
+- シンプルで見やすい UI
+- タスクの完了管理
+
+### ✔️ 3 タブ構成の直観的 UI
+- ホーム：AIタスク入力 & 自動生成
+- タスク一覧：タスク管理
+
+✔️ Web アプリとして即利用可能
+
+## 🎥 デモ
+基本の画面です  
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/8e741136-b1b9-4628-b91e-e07e5789d6b7" /><br>
+タスク追加画面では以下のように色、期限を設定できます  
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/36bad9a2-a636-4112-b575-f2ed3503bc7e" /><br>
+期限を選択すると日程と時間・分を設定できます  
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/749c9561-a994-402a-86ad-33759950ca6a" /><br>
+検索ボタンを押すとタスクを検索することができます  
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/0523b366-2a56-436d-bdeb-28e19a44ecaf" /><br>
+検索ボタン下の＋ボタンを押すとタブを追加できます  
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/e2758461-3855-47f0-a140-e7bf677073e8" /><br>
+追加後はこのような表示になります
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/eb77c7b2-5b34-4648-965d-5c1fa53390a3" /><br>
+左側のドロワーを開き編集ボタンを押すとこのようにタブバーの編集ができます
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/8b0f247b-b214-449c-a87c-21074732c610" /><br>
+
+## AI機能について  
+文章を入力するとこのようにタスクが自動で抽出され、期日もまとめてくれます(個人情報の部分は加工してあります)  
+<img width="300" alt="スクリーンショット 2025-11-14 111641" src="https://github.com/user-attachments/assets/0db16b48-4292-48b0-b843-f863479821f6" /><br>
+選択し追加すると無事反映されました(個人情報の部分は加工してあります)  
+<img width="300" alt="スクリーンショット 2025-11-14 112317" src="https://github.com/user-attachments/assets/70bf9faa-178e-4fe5-a1f7-72c76c9e7e87" /><br>
+
+
 
 
 ## Getting Started
