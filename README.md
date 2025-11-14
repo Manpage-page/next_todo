@@ -73,10 +73,11 @@ AI が文章を解析してタスクを生成することで、
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/8b0f247b-b214-449c-a87c-21074732c610" /><br>
 
 ## AI機能について  
-文章を入力するとこのようにタスクが自動で抽出され、期日もまとめてくれます(個人情報の部分は加工してあります)  
-<img width="300" alt="スクリーンショット 2025-11-14 111641" src="https://github.com/user-attachments/assets/0db16b48-4292-48b0-b843-f863479821f6" /><br>
-選択し追加すると無事反映されました(個人情報の部分は加工してあります)  
-<img width="300" alt="スクリーンショット 2025-11-14 112317" src="https://github.com/user-attachments/assets/70bf9faa-178e-4fe5-a1f7-72c76c9e7e87" /><br>
+文章を入力するとこのようにタスクが自動で抽出され、期日もまとめてくれます  
+<img width="536" height="591" alt="image" src="https://github.com/user-attachments/assets/fcdbba61-4f7f-491c-a372-62d0bda6b4f7" /><br>
+選択し追加すると無事反映されました  
+<img width="537" height="583" alt="image" src="https://github.com/user-attachments/assets/0a264d66-2676-46ed-b14d-2449fae46853" />
+
 
 
 
